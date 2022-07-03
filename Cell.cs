@@ -13,6 +13,8 @@ namespace Tetris1
         private int[,] cell = new int[3, 3];
         private ConsoleColor bg, fg;
         private int x, y;
+        private Draw pen;
+
         public int Y
         {
             get { return y; }
@@ -48,6 +50,8 @@ namespace Tetris1
         }
         public Cell(ConsoleColor bg, ConsoleColor fg)
         {
+
+            pen = new Draw();
             cell = new int[3, 3];
             x = 0;
             y = 0;
@@ -121,30 +125,46 @@ namespace Tetris1
          }*/
         public void Draw()
         {
-            int y_ = y;
-            Console.ForegroundColor = fg;
+            //int y_ = y;
+            
+            //Console.ForegroundColor = fg;
             for (int i = 0; i < 3; i++)
+
             {
+                int xL = x;
+                int yT = y + (i * pen.Height);
                 for (int j = 0; j < 3; j++)
                 {
-                    Console.SetCursorPosition(x + j, y_);
-                    Console.Write("{0}", cell[i, j] == 0 ? ' ' : '*');
+                    xL = x + (j * pen.Width);
+                    if (cell[i, j] == 1)
+                    {
+                        pen.drawRec(xL, yT, xL + pen.Width, yT + pen.Height, fg);
+                    }
+                    //Console.SetCursorPosition(x + j, y_);
+                    // Console.Write("{0}", cell[i, j] == 0 ? ' ' : '*');
+
+                    
                 }
-                y_++;
             }
         }
         public void Clear()
         {
             int y_ = y;
-            Console.ForegroundColor = ConsoleColor.Black;
+            //Console.ForegroundColor = ConsoleColor.Black;
             for (int i = 0; i < 3; i++)
             {
+                int xL = x;
+                int yT = y + (i * pen.Height);
                 for (int j = 0; j < 3; j++)
                 {
-                    Console.SetCursorPosition(x + j, y_);
-                    Console.Write("{0}", cell[i, j] == 0 ? ' ' : '*');
+                    xL = x + (j * pen.Width);
+                    if (cell[i, j] == 1)
+                    {
+                        pen.drawRec(xL, yT, xL + pen.Width, yT + pen.Height, bg);
+                    }
+                    //Console.Write(' ');
                 }
-                y_++;
+                
             }
         }
         public void Move()

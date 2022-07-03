@@ -8,13 +8,16 @@ namespace Tetris1
 {
     class Tetris
     {
-
+        private Board board;
         public void run()
         {
+            board.Draw();
+            cell.Draw();
+
             var readkeys = new Task(Readkeys);//var la ten bien, var la bien
             readkeys.Start();
             var animation = new Task(Animation);
-            animation.Start();
+            //animation.Start();
 
             var tasks = new[] { readkeys };
             Task.WaitAll(tasks);
@@ -25,7 +28,8 @@ namespace Tetris1
         }
         public Tetris()
         {
-            cell = new Cell(ConsoleColor.Black, ConsoleColor.White);
+            board = new Board(ConsoleColor.Black,ConsoleColor.Red);
+            cell = new Cell(ConsoleColor.Black, ConsoleColor.Red);
         }
         private Cell cell;
         private void Readkeys()
